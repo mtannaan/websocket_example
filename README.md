@@ -12,3 +12,8 @@ cd websocket_example
 docker-compose up
 ```
 を実行した後に、client/index.htmlをブラウザで開く。
+
+TLSも試す場合には、ブラウザの証明書チェックを無効にする。Chrome for Macならこんな感じ。
+```sh
+SSLKEYLOGFILE=~/Desktop/tls.log /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --ignore-certificate-errors client/index.html
+```

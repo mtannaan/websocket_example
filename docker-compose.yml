@@ -6,5 +6,5 @@ services:
     container_name: node_websocket_test
     tty: true
     ports:
-      - "5001:5001"
-
+      - "80:5080"
+      - "443:5443"

@@ -2,38 +2,51 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>WebSocket Example</title>
 </head>
 <body>
-    <!-- 送信ボタン -->
-    <input type="button" id="send_button" value="送信">
-    <input type="button" id="close_button" value="閉じる">
+    <h1>ws</h1>
+    <p>
+        <input type="button" id="send_button_ws" value="送信">
+        <input type="button" id="close_button_ws" value="閉じる">    
+    </p>
+    <h1>wss</h1>
+    <p>
+        <input type="button" id="send_button_wss" value="送信">
+        <input type="button" id="close_button_wss" value="閉じる">    
+    </p>
 
     <script>
         // WebSocketのクライアントの生成
-        let ws = new WebSocket('ws://localhost:5001')
+        const ws = new WebSocket('ws://localhost:80');
+        const wss = new WebSocket('wss://localhost:443');
  
-        // 接続時に呼ばれる
-        ws.addEventListener('open', e => {
-            console.log('open')
-        })
+        function registerWS(sock, suffix) {
+            // 接続時に呼ばれる
+            sock.addEventListener('open', e => {
+                console.log('open')
+            })
 
-        // サーバからのデータ受信時に呼ばれる
-        ws.addEventListener('message', e => {
-            console.log(e.data)
-        })
+            // サーバからのデータ受信時に呼ばれる
+            sock.addEventListener('message', e => {
+                console.log(e.data)
+            })
 
-        // ボタンクリック時に呼ばれる
-        document.getElementById('send_button').addEventListener('click', e => {
-            // サーバへのデータ送信
-            ws.send('hello')
-        })
+            // ボタンクリック時に呼ばれる
+            document.getElementById('send_button_' + suffix).addEventListener('click', e => {
+                // サーバへのデータ送信
+                sock.send('hello')
+            })
 
-        // ボタンクリック時に呼ばれる
-        document.getElementById('close_button').addEventListener('click', e => {
-            // サーバへのデータ送信
-            ws.close()
-        })
+            // ボタンクリック時に呼ばれる
+            document.getElementById('close_button_' + suffix).addEventListener('click', e => {
+                // サーバへのデータ送信
+                sock.close()
+            })
+        }
+
+        registerWS(ws, 'ws');
+        registerWS(wss, 'wss');
 </script>
 </body>
 </html>
